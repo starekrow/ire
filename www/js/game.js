@@ -21,7 +21,7 @@ function GameClass()
 
 var _static = GameClass;
 var _public = GameClass.prototype;
-global.GameClass = GameClass;
+root.GameClass = GameClass;
 
 /*
 =====================
@@ -30,7 +30,7 @@ _construct
 */
 _public._construct = function( config )
 {
-	this.window = config.window;
+	this.window = window;
 	this.tasklist = [];
 	this.tasks = {};
 	this.ticks = 0;
@@ -125,6 +125,6 @@ _public.Tick = function()
 ================================================================================
 */
 
-global.game = new GameClass();
+root.game = new GameClass();
 
 })();

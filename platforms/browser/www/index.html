@@ -55,6 +55,7 @@
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript">
+        console.log('Loading');
         if (typeof root == "undefined") {
             var root;
             if (typeof window != "undefined") {
@@ -66,7 +67,9 @@
             }
         }
     </script>
-    <!-- script type="text/javascript" src="js/index.js"><x/script -->
+    <script type="text/javascript" src="js/lib.js"></script>
+    <script type="text/javascript" src="js/task.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript">
         document.addEventListener('deviceready', function() {
             var parentElement = document.getElementById('deviceready');
@@ -76,7 +79,7 @@
             listeningElement.setAttribute('style', 'display:none;');
             receivedElement.setAttribute('style', 'display:block;');
 
-            console.log('Received Event: ' + id);
+            console.log('Started');
             game.Start();
         } , false);
     </script>
