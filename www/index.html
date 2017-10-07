@@ -54,9 +54,19 @@
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
+        var global;
+        if (typeof window != "undefined") {
+            global = window;
+        } else if (typeof self != "undefined") {
+            global = self;
+        } else {
+            global = this;
+        }
+    </script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
-        app.initialize();
+        game.Start();
     </script>
 </body>
 
