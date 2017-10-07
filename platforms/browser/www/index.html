@@ -54,9 +54,31 @@
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
-        app.initialize();
+        if (typeof root == "undefined") {
+            var root;
+            if (typeof window != "undefined") {
+                root = window;
+            } else if (typeof self != "undefined") {
+                root = self;
+            } else {
+                root = this;
+            }
+        }
+    </script>
+    <!-- script type="text/javascript" src="js/index.js"><x/script -->
+    <script type="text/javascript">
+        document.addEventListener('deviceready', function() {
+            var parentElement = document.getElementById('deviceready');
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
+
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
+
+            console.log('Received Event: ' + id);
+            game.Start();
+        } , false);
     </script>
 </body>
 
