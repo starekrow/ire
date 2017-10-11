@@ -12,14 +12,14 @@ stuff that needs abstraction for whatever reason.
 
 ================================================================================
 */
-(function( global ) {
+(function() {
 
 /*
 =====================
 copy
 =====================
 */
-global.copy = function( thing, depth )
+root.copy = function( thing, depth )
 {
     // Handle the 3 simple types, and null or undefined
     if (null === obj || "object" != typeof obj) return obj;
@@ -66,10 +66,9 @@ global.copy = function( thing, depth )
     return obj;
 }
 
-
 /*
 ================================================================================
 
 ================================================================================
 */
-})(this);
+})();

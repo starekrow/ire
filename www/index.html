@@ -81,6 +81,19 @@
 
             console.log('Started');
             game.Start();
+
+            var ticker = function( ms ) {
+                ticker.t || (ticker.t = 0);
+                ticker.n || (ticker.n = 0);
+                ++ticker.n;
+                ticker.t += ms;
+                if (ticker.t > 1000) {
+                    console.log( "tick (" + ticker.n + ")" );
+                    ticker.t -= 1000;
+                }
+            }
+
+            var x = new Task( ticker );
         } , false);
     </script>
 </body>
