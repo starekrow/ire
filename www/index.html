@@ -70,6 +70,9 @@
     <script type="text/javascript" src="js/lib.js"></script>
     <script type="text/javascript" src="js/task.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/texture.js"></script>
+    <script type="text/javascript" src="js/sprite.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript">
         document.addEventListener('deviceready', function() {
             var parentElement = document.getElementById('deviceready');
@@ -80,20 +83,21 @@
             receivedElement.setAttribute('style', 'display:block;');
 
             console.log('Started');
-            game.Start();
+            game.Start( MainClass );
 
             var ticker = function( ms ) {
                 ticker.t || (ticker.t = 0);
                 ticker.n || (ticker.n = 0);
                 ++ticker.n;
                 ticker.t += ms;
-                if (ticker.t > 1000) {
-                    console.log( "tick (" + ticker.n + ")" );
+                if (ticker.t >= 1000) {
+                    //console.log( "tick (" + ticker.n + ")" );
                     ticker.t -= 1000;
                 }
             }
 
-            var x = new Task( ticker );
+
+            //var x = new Task( ticker );
         } , false);
     </script>
 </body>

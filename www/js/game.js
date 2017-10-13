@@ -39,6 +39,9 @@ _public._construct = function( config )
 	this.preferredFPS = 60;
 	this.runtime = 0;
 	this.taskCounter = 0;
+	this.container = document.body;
+	this.w = this.container.clientWidth;
+	this.h = this.container.clientHeight;
 }
 
 /*
@@ -153,9 +156,12 @@ Start
 Starts running the game loop
 =====================
 */
-_public.Start = function()
+_public.Start = function( gameclass )
 {
 	var that = this;
+
+	this.game_class = gameclass;
+
 	var withRAF = function() {
 		// TODO: adapt following
 		/*
@@ -185,8 +191,10 @@ _public.Start = function()
 			that.gameLoopTimer = setTimeout( nextframe, 0 );
 			that.norafRealTime = t;
 			var dt = that.norafNextTick - t;
-			if (dt >= -1.3 && dt <= 1.3) {
+			if (dt >= -2 && dt <= 2) {
 				t = that.norafNextTick;
+			} else {
+				console.log( "frameskip, dt=" + dt );
 			}
 			that.norafNextTick += 1000 / that.preferredFPS;
 			that.Tick( t );
@@ -200,6 +208,7 @@ _public.Start = function()
 		startframe();
 	}
 	noRAF();
+	this.game_instance = new gameclass();
 }
 
 /*
@@ -218,7 +227,7 @@ _public.Tick = function( mstime )
 	if (this.msElapsed > 75) {
 		if (this.msElapsed > 250) {
 			// Something major has interrupted the game. Don't warp.
-			this.msElapsed = 1000 / that.preferredFPS;
+			this.msElapsed = 1000 / this.preferredFPS;
 		} else {
 			this.msElapsed = 75;
 		}
