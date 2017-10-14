@@ -60,28 +60,39 @@ Bounce
 */
 _public.Bounce = function( task )
 {
+	var i,ic,j,k;
 	if (!task.ticks) {
-		this.ball = new Sprite( {
-			image: "ball", x:0, y:100, w:50, h:50
-
-		} );
-	}
-	var v = 400/1000;	// px/ms
-	if (this.pong) {
-		this.ball.x -= v * task.ms;
-		if (this.ball.x < 0) {
-			this.ball.x = -this.ball.x;
-			this.pong = !this.pong;
-		}
-	} else {
-		this.ball.x += v * task.ms;
-		if (this.ball.x > game.w - this.ball.w) {
-			this.ball.x -= game.w - this.ball.w;
-			this.ball.x = game.w - this.ball.w - this.ball.x;
-			this.pong = !this.pong;
+		this.balls = [];
+		for (i = 0; i < 500; i++) {
+			var b = new Sprite( {
+				image: "ball", x:0, y:100, w:50, h:(50*300/212)|1
+			} );
+			var v = 300/1000;	// px/ms
+			b.vx = v * 2 * Math.random() - v;
+			b.vy = v * 2 * Math.random() - v;
+			this.balls.push( b );
 		}
 	}
-	this.ball.MarkDirty();
+	for (i = 0, ic = this.balls.length; i < ic; i++) {
+		var b = this.balls[i];
+		b.x += b.vx * task.ms;
+		b.y += b.vy * task.ms;
+		if (b.x < 0) {
+			b.x = -b.x;
+			b.vx = -b.vx;
+		} else if (b.x + b.w > game.w) {
+			b.x = -b.x + (game.w - b.w) * 2;
+			b.vx = -b.vx;
+		}
+		if (b.y < 0) {
+			b.y = -b.y;
+			b.vy = -b.vy;
+		} else if (b.y + b.h > game.h) {
+			b.y = -b.y + (game.h - b.h) * 2;
+			b.vy = -b.vy;
+		}
+		b.MarkDirty();
+	}
 }
 
 

@@ -42,6 +42,7 @@ _public._construct = function( config )
 	this.container = document.body;
 	this.w = this.container.clientWidth;
 	this.h = this.container.clientHeight;
+	this.profiling = true;
 }
 
 /*
@@ -163,6 +164,10 @@ _public.Start = function( gameclass )
 	this.game_class = gameclass;
 
 	var withRAF = function() {
+		var startframe = function( ms ) {
+			that.gameLoopTimer = requestAnimationFrame( startframe );
+			that.Tick( ms );
+		}
 		// TODO: adapt following
 		/*
 		var lastTime = 0,
@@ -184,6 +189,7 @@ _public.Start = function( gameclass )
 		                               || window[vendors[x]+'CancelRequestAnimationFrame'];
 		}
 		*/
+		requestAnimationFrame( startframe );
 	}
 	var noRAF = function() {
 		var startframe = function() {
@@ -195,6 +201,7 @@ _public.Start = function( gameclass )
 				t = that.norafNextTick;
 			} else {
 				console.log( "frameskip, dt=" + dt );
+				that.norafNextTick = t;
 			}
 			that.norafNextTick += 1000 / that.preferredFPS;
 			that.Tick( t );
@@ -208,7 +215,47 @@ _public.Start = function( gameclass )
 		startframe();
 	}
 	noRAF();
+	//withRAF();
 	this.game_instance = new gameclass();
+}
+
+/*
+=====================
+ProfileMark
+=====================
+*/
+_public.ProfileMark = function( clr )
+{
+	if (this.profiling) {
+		this.profile.push( this.GetTime() );
+		this.profile.push( clr );
+	}
+}
+
+/*
+=====================
+ProfileDraw
+=====================
+*/
+_public.ProfileDraw = function()
+{
+	if (this.profileNode) {
+		this.profileNode.parentNode.removeChild( this.profileNode );
+		this.profileNode = null;
+	}
+	if (!this.profiling) {
+		return;
+	}
+	var t2 = this.GetTime();
+	var t1 = this.profile[0];
+	var n = this.profileNode = document.createElement( "div" );
+	n.style.position = "absolute";
+	n.style.bottom = "3%";
+	n.style.height = "4px";
+	n.style.left = "0px";
+	n.style.width = (t2 - t1) / (1000 / this.preferredFPS) * 100 + "%";
+	n.style.backgroundColor = "#ff0000";
+	game.container.appendChild( n );
 }
 
 /*
@@ -223,7 +270,9 @@ _public.Tick = function( mstime )
 {
 	var i;
 	this.msElapsed = mstime - this.msTime;
+	this.profile = [ this.GetTime(), 0xff0000 ];
 	// Limit warping to 1/15th of a second
+	//console.log( mstime );
 	if (this.msElapsed > 75) {
 		if (this.msElapsed > 250) {
 			// Something major has interrupted the game. Don't warp.
@@ -244,6 +293,7 @@ _public.Tick = function( mstime )
 	}
 	// TODO: background tasks
 	this.SetupNewTasks();
+	this.ProfileDraw();
 }
 
 

@@ -122,6 +122,7 @@ Multi-purpose decimal number formatting.
     `true`, it will use "0". Normally padding is applied around the result,
     but if the fill character is "0" and padding is on the left, the padding is
     inserted between any sign character and the rest of the result.
+
 =====================
 */
 root.formatFP = function( val, prec, wid, sign, fill )
@@ -149,6 +150,49 @@ root.formatFP = function( val, prec, wid, sign, fill )
 	}
 	return fill.repeat( w ) + sign + s;
 }
+
+/*
+=====================
+translateFP
+
+Like formatFP, except produces a localized result.
+
+You can control the output of translateFP by setting properties on the
+translateFP.chars object.  The recognized properties are:
+
+  * `digits` - a 10-character string containing the digit characters to use
+  * `.` - character to use for decimal point
+  * `+` - character to use for positive sign
+  * `-` - character to use for negative sign
+  * ` ` - character to use for space padding
+  * `,` - character to use for thousands separator
+  * other - any other Unicode character (for example, characters used for 
+    padding) will be translated through the `chars` object as well.
+
+Any character that has no matching entry in `chars` will remain untranslated.
+
+For example:
+	translateFP.chars.digits = "abcdefghij";
+	translateFP.chars["."] = "#";
+	translateFP.chars[" "] = "=";
+	translateFP( 10.2, 5, 10 ); 		// returns "==ba#caaaa"
+
+This is of course more useful if you are translating to e.g. Arabic, CJK, etc.
+=====================
+*/
+root.translateFP = function( val, prec, wid, sign, fill )
+{
+	var s = formatFP( val, prec, wid, sign, fill );
+	var x = translateFP.chars;
+	return s.replace( /./g, function( c ) {
+		if (c >= '0' && c <= '9' && x.digits) {
+			return x.digits.charAt( c.charCodeAt(0) - 48 );
+		}
+		return x[c] ? x[c] : c;
+	} );
+}
+
+root.translateFP.chars = {};
 
 
 /*
