@@ -65,13 +65,13 @@ _public._construct = function( taskfunc, options )
 	this.ticks = 0;
 	this.runtime = 0;
 	if (options) {
-		if ("name" 			in options) this.name      = options.name;
+		if ("name" 			in options) this.name      		= options.name;
 		//if ("interval" 		in options)	this.task_interval  = options.interval;
 		if ("instance" 		in options)	this.task_instance  = options.instance;
 		if ("arguments" 	in options)	this.task_arguments = options.arguments;
 		if ("order" 		in options)	this.task_order     = options.order;
 		//if ("background" 	in options)	this.task_background= options.background;
-		if ("paused" 		in options)	this.paused    = options.paused;
+		if ("paused" 		in options)	this.paused    		= options.paused;
 		if ("wait" 			in options)	this.task_wait      = options.wait;
 	}
 	this.Schedule();
