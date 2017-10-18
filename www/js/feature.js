@@ -5,22 +5,27 @@
 /*
 ================================================================================
 
-Sprite
+Feature
+
+Features are placed in the world. They (usually) overlay the terrain.
+
+Whereas terrain is largely static with environmental effects, features may
+be interactive with triggered effects.
+
+Items, Actors and Effects are rendered as features
 
 ================================================================================
 */
 (function() {
 
-function Sprite()
+function Terrain()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = Sprite;
-var _public = Sprite.prototype;
-root.Sprite = Sprite;
-
-_public.toString = function() { return "[object Sprite]"; }
+var _static = Terrain;
+var _public = Terrain.prototype;
+root.Terrain = Terrain;
 
 _static.all = [];
 _static.dirty = [];
@@ -64,43 +69,6 @@ MoveTo
 */
 _public.MoveTo = function( x, y )
 {
-	this.x = +x || 0;
-	this.y = +y || 0;
-	this.MarkDirty();
-}
-
-/*
-=====================
-MarkDirty
-=====================
-*/
-_public.MarkDirty = function( x, y )
-{
-	if (!this.dirty) {
-		this.dirty = true;
-		_static.dirty.push( this );
-	}
-}
-
-
-
-/*
-=====================
-DoUpdate
-=====================
-*/
-_static.DoUpdate = function( task )
-{
-	var i, ic, dl;
-	dl = _static.dirty;
-	for (i = 0, ic = dl.length; i < ic; ++i) {
-		var s = dl[i];
-		var n = s.node;
-		n.style.left = "" + (s.x|0) + "px";
-		n.style.top = "" + (s.y|0) + "px";
-		s.dirty = false;
-	}
-	_static.dirty = [];
 }
 
 

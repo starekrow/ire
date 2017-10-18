@@ -14,6 +14,16 @@ stuff that needs abstraction for whatever reason.
 */
 (function() {
 
+
+root.isString = function(v) { return typeof v == 'string'; }
+root.isNumber = function(v) { return typeof v == 'number'; }
+root.isArray  = function(v) { return v !== null && typeof v == 'object' && 
+	Object.prototype.toString.apply(v) == "[object Array]"; }
+root.isAssoc  = function(v) { return v !== null && typeof v == "object" && 
+	v.constructor == Object; }
+root.isObject = function(v) { return v !== null && typeof v == 'object' &&
+	Object.prototype.toString.apply(v) == "[object Object]"; }
+
 /*
 =====================
 copy

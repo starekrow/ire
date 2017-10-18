@@ -19,6 +19,7 @@ function Texture()
 var _static = Texture;
 var _public = Texture.prototype;
 root.Texture = Texture;
+_public.toString = function() { return "[object Texture]"; }
 
 _static.ready = Promise.resolve();
 _static.loading_count = 0;
