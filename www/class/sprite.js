@@ -5,22 +5,21 @@
 /*
 ================================================================================
 
-Sprite
+IrSprite
 
 ================================================================================
 */
 (function() {
 
-function Sprite()
+function IrSprite()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = Sprite;
-var _public = Sprite.prototype;
-root.Sprite = Sprite;
-
-_public.toString = function() { return "[object Sprite]"; }
+var _static = IrSprite;
+var _public = IrSprite.prototype;
+root.IrSprite = IrSprite;
+_public.toString = function() { return "[object IrSprite]"; }
 
 _static.all = [];
 _static.dirty = [];

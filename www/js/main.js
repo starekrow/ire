@@ -30,7 +30,7 @@ _construct
 _public._construct = function( config )
 {
 	new Task( this.Loader, { instance: this } );
-	new Task( Sprite.DoUpdate, { order: 90 } );
+	new Task( IrSprite.DoUpdate, { order: 90 } );
 }
 
 /*
@@ -41,14 +41,14 @@ Loader
 _public.Loader = function( task )
 {
 	if (!task.ticks) {
-		new Texture( "ball.png" );
-		Texture.ready.then( function() {
+		new IrTexture( "ball.png" );
+		IrTexture.ready.then( function() {
 			task.ready = true;
 		} );
 	}
 	if (task.ready) {
 		task.End();
-		new Task( this.Bounce, { instance: this } );
+		new irTask( this.Bounce, { instance: this } );
 	}
 }
 
@@ -64,7 +64,7 @@ _public.Bounce = function( task )
 	if (!task.ticks) {
 		this.balls = [];
 		for (i = 0; i < 500; i++) {
-			var b = new Sprite( {
+			var b = new IrSprite( {
 				image: "ball", x:0, y:100, w:50, h:(50*300/212)|1
 			} );
 			var v = 300/1000;	// px/ms

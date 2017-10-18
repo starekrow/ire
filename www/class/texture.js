@@ -5,21 +5,21 @@
 /*
 ================================================================================
 
-Texture
+IrTexture
 
 ================================================================================
 */
 (function() {
 
-function Texture()
+function IrTexture()
 {
 	return this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = Texture;
-var _public = Texture.prototype;
-root.Texture = Texture;
-_public.toString = function() { return "[object Texture]"; }
+var _static = IrTexture;
+var _public = IrTexture.prototype;
+root.IrTexture = IrTexture;
+_public.toString = function() { return "[object IrTexture]"; }
 
 _static.ready = Promise.resolve();
 _static.loading_count = 0;
@@ -35,7 +35,7 @@ _public._construct = function( file )
 {
 	var that = this;
 
-	if (file instanceof Texture) {
+	if (file instanceof IrTexture) {
 		return file;
 	}
 

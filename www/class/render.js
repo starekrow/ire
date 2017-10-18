@@ -96,6 +96,9 @@ x and y are screen positions. z is the offset from the "expected" in-world z
 value of 0 for the given screen position. Positive values move closer to the 
 camera.
 
+Tiles at the same x, y, and z will be drawn back-to-front in the order they
+are created.
+
 Returns a handle to the tile that can be used in UpdateTile. The handle will be
 a non-zero integer.
 =====================
@@ -114,7 +117,7 @@ _public.AddTile = function( tex, x, y, z, options )
 	}
 	var h = this.handleCounter++;
 	e.id = "r" + h;
-	this.SetTileTexture( e, tex );
+	this.SetNodeTexture( e, tex );
 	this.worldDiv.appendChild( e );
 }
 
@@ -145,7 +148,7 @@ _public.UpdateTile = function( hdl, options )
 		e.style.zIndex = ((-options.y + options.z) * 10 | 0);
 	}
 	if ("alpha" in options)  e.style.opacity = options.alpha;
-	if ("tex" in options)  this.SetTileTexture( e, options.tex );
+	if ("tex" in options)  this.SetNodeTexture( e, options.tex );
 }
 
 /*
@@ -172,7 +175,7 @@ Applies a texture to a tile's DOM node. Automatic animation can be handled at
 this level, and the renderer will perform the updates.
 =====================
 */
-_public.SetTileTexture = function( node, tex )
+_public.SetNodeTexture = function( node, tex )
 {
 	if (!isObject( tex )) {
 		tex = new Texture( tex );

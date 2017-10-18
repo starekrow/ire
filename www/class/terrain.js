@@ -137,14 +137,7 @@ Tileset is:
 
 
 The on-screen tileset is unpacked in 8x8 groups for display and navigation:
-  * 
 
-Rendering:
-
-Any moving item will generally require a 2x2 area to be redrawn. This is done
-by for each tile, look up position in tilemap
-
-All moving actors are processed and a list of tiles to redraw is 
 
 
 
@@ -152,15 +145,15 @@ All moving actors are processed and a list of tiles to redraw is
 */
 (function() {
 
-function Terrain()
+function irTerrain()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = Terrain;
-var _public = Terrain.prototype;
-root.Terrain = Terrain;
-_public.toString = function() { return "[object Terrain]"; }
+var _static = irTerrain;
+var _public = irTerrain.prototype;
+root.Terrain = irTerrain;
+_public.toString = function() { return "[object irTerrain]"; }
 
 _static.all = [];
 _static.dirty = [];
@@ -172,29 +165,7 @@ _construct
 */
 _public._construct = function( config )
 {
-	if (!config)  config = {};
-
-	//this.texture = config.image || config.texture;
-	this.texture = new Texture( config.image || config.texture );
-	this.x = config.x || 0;
-	this.y = config.y || 0;
-	var ctr = new Image();
-	ctr.src = this.texture.url;
-	ctr.style.left = "-10000px";
-	ctr.style.top = "-10000px";
-	ctr.style.position = "absolute";
-	this.w = this.texture.w;
-	this.h = this.texture.h;
-	if ("w" in config) {
-		this.w = +config.w;
-		this.h = +config.h;
-		ctr.style.width = this.w + "px";
-		ctr.style.height = this.h + "px";
-	}
-	this.node = ctr;
-	game.container.appendChild( ctr );
-	_static.all.push( this );
-	this.MarkDirty();
+	
 }
 
 /*
