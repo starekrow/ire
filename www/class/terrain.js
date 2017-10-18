@@ -5,7 +5,7 @@
 /*
 ================================================================================
 
-Terrain
+IrTerrain
 
 Terrain is built up in layers. Each layer is built from tiles.
 
@@ -145,15 +145,15 @@ The on-screen tileset is unpacked in 8x8 groups for display and navigation:
 */
 (function() {
 
-function irTerrain()
+function IrTerrain()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = irTerrain;
-var _public = irTerrain.prototype;
-root.Terrain = irTerrain;
-_public.toString = function() { return "[object irTerrain]"; }
+var _static = IrTerrain;
+var _public = IrTerrain.prototype;
+root.Terrain = IrTerrain;
+_public.toString = function() { return "[object IrTerrain]"; }
 
 _static.all = [];
 _static.dirty = [];
