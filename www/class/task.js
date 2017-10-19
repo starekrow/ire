@@ -5,7 +5,7 @@
 /*
 ================================================================================
 
-Task
+IrTask
 
 Tasks are used to wrap and manage code that should be run at certain intervals
 or under certain conditions.
@@ -21,20 +21,20 @@ you can include that in options.instance and/or options.arguments.
 
 Example:
 
-	new Task( UpdateScore )
+	new IrTask( UpdateScore )
 
 ================================================================================
 */
 (function( global ) {
 
-function Task()
+function IrTask()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = Task;
-var _public = Task.prototype;
-global.Task = Task;
+var _static = IrTask;
+var _public = IrTask.prototype;
+global.IrTask = IrTask;
 
 _public.game 			= null;
 //_public.task_interval 	= 0;

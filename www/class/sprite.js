@@ -34,7 +34,7 @@ _public._construct = function( config )
 	if (!config)  config = {};
 
 	//this.texture = config.image || config.texture;
-	this.texture = new Texture( config.image || config.texture );
+	this.texture = new IrTexture( config.image || config.texture );
 	this.x = config.x || 0;
 	this.y = config.y || 0;
 	var ctr = new Image();

@@ -68,10 +68,10 @@
         }
     </script>
     <script type="text/javascript" src="js/lib.js"></script>
-    <script type="text/javascript" src="js/task.js"></script>
-    <script type="text/javascript" src="js/game.js"></script>
-    <script type="text/javascript" src="js/texture.js"></script>
-    <script type="text/javascript" src="js/sprite.js"></script>
+    <script type="text/javascript" src="class/task.js"></script>
+    <script type="text/javascript" src="class/game.js"></script>
+    <script type="text/javascript" src="class/texture.js"></script>
+    <script type="text/javascript" src="class/sprite.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript">
         document.addEventListener('deviceready', function() {
@@ -83,7 +83,7 @@
             receivedElement.setAttribute('style', 'display:block;');
 
             console.log('Started');
-            game.Start( MainClass );
+            game.Start( IrMain );
 
             var ticker = function( ms ) {
                 ticker.t || (ticker.t = 0);

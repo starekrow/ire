@@ -5,7 +5,7 @@
 /*
 ================================================================================
 
-main
+IrMain
 
 Main program for TSEUQ (Titanic Super Elite Ultra Quest)
 
@@ -13,14 +13,15 @@ Main program for TSEUQ (Titanic Super Elite Ultra Quest)
 */
 (function() {
 
-function MainClass()
+function IrMain()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = MainClass;
-var _public = MainClass.prototype;
-root.MainClass = MainClass;
+var _static = IrMain;
+var _public = IrMain.prototype;
+root.IrMain = IrMain;
+_public.toString = function() { return "[object IrMain]"; }
 
 /*
 =====================
@@ -29,8 +30,8 @@ _construct
 */
 _public._construct = function( config )
 {
-	new Task( this.Loader, { instance: this } );
-	new Task( IrSprite.DoUpdate, { order: 90 } );
+	new IrTask( this.Loader, { instance: this } );
+	new IrTask( IrSprite.DoUpdate, { order: 90 } );
 }
 
 /*
@@ -48,7 +49,7 @@ _public.Loader = function( task )
 	}
 	if (task.ready) {
 		task.End();
-		new irTask( this.Bounce, { instance: this } );
+		new IrTask( this.Bounce, { instance: this } );
 	}
 }
 

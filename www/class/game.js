@@ -5,23 +5,24 @@
 /*
 ================================================================================
 
-game
+IrGame
 
 Main loop and top-level support for the game. This is mostly a singleton, but 
-you can create other game objects with the GameClass class.
+you can create other game objects with the IrGame class.
 
 ================================================================================
 */
 (function() {
 
-function GameClass()
+function IrGame()
 {
 	this._construct && this._construct.apply( this, arguments );
 }
 
-var _static = GameClass;
-var _public = GameClass.prototype;
-root.GameClass = GameClass;
+var _static = IrGame;
+var _public = IrGame.prototype;
+root.IrGame = IrGame;
+_public.toString = function() { return "[object IrGame]"; }
 
 /*
 =====================
@@ -303,6 +304,6 @@ _public.Tick = function( mstime )
 ================================================================================
 */
 
-root.game = new GameClass();
+root.game = new IrGame();
 
 })();
