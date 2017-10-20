@@ -152,45 +152,120 @@ function IrTerrain()
 
 var _static = IrTerrain;
 var _public = IrTerrain.prototype;
-root.Terrain = IrTerrain;
+root.IrTerrain = IrTerrain;
 _public.toString = function() { return "[object IrTerrain]"; }
 
-_static.all = [];
-_static.dirty = [];
+_static.terrainCounter = 1;
 
 /*
 =====================
 _construct
 =====================
 */
-_public._construct = function( config )
+_public._construct = function( def )
 {
-	
+	if (!def) {
+		def = {};
+	}
+	this.id = _static.terrainCounter++;
+	this.idCounter = 1;
+	this.tiledefs = [ null ];
+	this.map = [];
+	this.rows = 0;
+	this.cols = 0;
+	this.x = 0;
+	this.y = 0;
+
+	if (def) {
+		this.Load( def );
+	}
 }
 
 /*
 =====================
-MoveTo
+Load
 =====================
 */
-_public.MoveTo = function( x, y )
+_public.Load = function( def )
 {
+	if (typeof def == "string") {
+		// TODO: Load from resource
+	}
+	if (typeof def.map == "string") {
+		this.LoadStringMap( def.map, def.tiles );
+	} else {
+		throw new IrDataError;
+	}
+}
+
+/*
+=====================
+LoadStringMap
+=====================
+*/
+_public.LoadStringMap = function( map, tiles )
+{
+	var ml = map.split( "\n" );
+
+	var xtc = {};
+	for (let c in tiles) {
+		let tdef = copy( tiles[c] );
+		if (tdef.texture) {
+			tdef.texture = new IrTexture( tdef.texture );
+		}
+		tdef.id = this.tiledefs.length;
+		this.tiledefs.push( tdef );
+		xtc[ c ] = tdef;
+	}
+	this.rows = ml.length;
+	this.cols = 0;
+	for (let i = 0; i < this.rows; i++) {
+		let l = ml[i];
+		if (l.length > this.cols) {
+			this.cols = l.length;
+		}
+	}
+	this.map = [];
+	for (let i = 0; i < this.rows; i++) {
+		let l = ml[i];
+		for (let j = 0, jc = l.length; j < jc; j++) {
+			let c = l.charAt( j );
+			if (!(c in xtc)) {
+				this.map[ i * this.cols + j ] = 0;
+				continue;
+			}
+			this.map[ i * this.cols + j ] = xtc[c].id;
+		}
+	}
 }
 
 
 /*
 =====================
-xxx
-
-Clears all tasks and loaded 
+Render
 =====================
 */
+_public.Render = function( playfield )
+{
+	this.playfield = playfield || game.playfield;
+	for (let i = 0; i < this.rows; i++) {
+		for (let j = 0; j < this.cols; j++) {
+			var td = this.tiledefs[ this.map[ i * this.cols + j ] ];
+			if (!td) {
+				continue;
+			}
+			this.playfield.NewSprite( {
+				 texture: td.texture
+				,x: j * 32
+				,y: i * 32
+
+			})
+		}
+	}
+}
 
 
 /*
 ================================================================================
-
-================================================================================
 */
-
 })();

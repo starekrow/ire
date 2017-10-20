@@ -48,12 +48,16 @@ _public._construct = function( config )
 
 /*
 =====================
-Task
+Init
 
-Register a new task. Tasks are called once per game tick
+Second-stage initialization. Do the things that require a game to exist
+before they can be done.
 =====================
 */
-
+_public.Init = function()
+{
+	this.playfield = new IrPlayfield();
+}
 
 
 /*
@@ -201,7 +205,7 @@ _public.Start = function( gameclass )
 			if (dt >= -2 && dt <= 2) {
 				t = that.norafNextTick;
 			} else {
-				console.log( "frameskip, dt=" + dt );
+				//console.log( "frameskip, dt=" + dt );
 				that.norafNextTick = t;
 			}
 			that.norafNextTick += 1000 / that.preferredFPS;
@@ -303,7 +307,5 @@ _public.Tick = function( mstime )
 
 ================================================================================
 */
-
-root.game = new IrGame();
 
 })();

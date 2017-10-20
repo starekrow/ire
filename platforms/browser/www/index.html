@@ -72,6 +72,8 @@
     <script type="text/javascript" src="class/game.js"></script>
     <script type="text/javascript" src="class/texture.js"></script>
     <script type="text/javascript" src="class/sprite.js"></script>
+    <script type="text/javascript" src="class/playfield.js"></script>
+    <script type="text/javascript" src="class/terrain.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript">
         document.addEventListener('deviceready', function() {
@@ -81,6 +83,9 @@
 
             listeningElement.setAttribute('style', 'display:none;');
             receivedElement.setAttribute('style', 'display:block;');
+
+            game = new IrGame();
+            game.Init();
 
             console.log('Started');
             game.Start( IrMain );

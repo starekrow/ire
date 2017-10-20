@@ -32,40 +32,40 @@ copy
 root.copy = function( thing, depth )
 {
     // Handle the 3 simple types, and null or undefined
-    if (null === obj || "object" != typeof obj) return obj;
+    if (null === thing || "object" != typeof thing) return thing;
 
     if (depth && depth !== true) {
     	--depth;
     }
 
     // Handle Array
-    if (obj instanceof Array) {
+    if (thing instanceof Array) {
         if (!depth) {
-        	return obj.slice( 0 );
+        	return thing.slice( 0 );
         }
         let res = [];
-        for (let i = 0, len = obj.length; i < len; i++) {
-            res[i] = copy( obj[i], depth );
+        for (let i = 0, len = thing.length; i < len; i++) {
+            res[i] = copy( thing[i], depth );
         }
         return res;
     }
 
     // Handle Date
-    if (obj instanceof Date) {
-    	return new Date(+obj);
+    if (thing instanceof Date) {
+    	return new Date(+thing);
     }
 
     // Handle "simple" objects
-    if (obj instanceof Object) {
+    if (thing instanceof Object) {
         let res = {};
         if (!depth) {
-	        for (let attr in obj) {
-	            if (obj.hasOwnProperty(attr))  res[attr] = obj[attr];
+	        for (let attr in thing) {
+	            if (thing.hasOwnProperty(attr))  res[attr] = thing[attr];
 	        }
         } else {
-	        for (let attr in obj) {
-	            if (obj.hasOwnProperty(attr)) {
-	            	res[attr] = copy( obj[attr], depth );
+	        for (let attr in thing) {
+	            if (thing.hasOwnProperty(attr)) {
+	            	res[attr] = copy( thing[attr], depth );
 	            }
 	        }
         }
@@ -73,7 +73,7 @@ root.copy = function( thing, depth )
     }
 
     // Fallback is to assume that the item is not a container.
-    return obj;
+    return thing;
 }
 
 /*

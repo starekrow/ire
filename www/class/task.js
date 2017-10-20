@@ -187,6 +187,8 @@ _public.Run = function( msElapsed )
 			this.task_arguments || [ this ]
 		);
 	} catch(e) {
+		++this.ticks;
+		throw e;
 		if (!this.task_errors) {
 			this.task_errors = [];
 		}
